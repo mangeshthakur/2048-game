@@ -4,7 +4,7 @@ RUN apt-get update
 
 RUN apt-get install -y curl zip nginx
 
-RUN echo "Daemon off:" >> /etc/nginx/nginx.conf
+RUN echo "Daemon off;" >> /etc/nginx/nginx.conf
 
 RUN curl -o /var/www/html/master.zip -L https://codeload.github.com/gabrielecirulli/2048/zip/master
 
