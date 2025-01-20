@@ -34,7 +34,7 @@ docker run -d -p 8080:80 --name 2048-game-container 2048-game
 ```
 
 - `-d` runs the container in detached mode.
-- `-p 8080:80` maps port 8080 on your host machine to port 80 in the container.
+- `-p 8080:80` maps port 8080 on your host machine to port 80 in the container
 - `--name 2048-game-container` assigns the name "2048-game-container" to the container.
 
 The 2048 game will be accessible at http://localhost:8080 in your web browser.
