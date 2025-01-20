@@ -1,4 +1,4 @@
-# 2048-game 🚀 🚀
+# 2048-game 🚀 
 
 ```markdown
 # 2048 Game Dockerfile
