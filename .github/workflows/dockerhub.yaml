@@ -1,8 +1,6 @@
 iname: Build and Push Image to DockerHub
 
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
   build:
