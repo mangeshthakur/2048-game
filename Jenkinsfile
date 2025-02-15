@@ -67,27 +67,28 @@ pipeline {
         stage('Wait for EC2 to be Ready') {
             steps {
                 script {
-                    sleep(60)  // Wait for 1 minute to allow instance setup
+                    sleep(30)  // Wait for 1 minute to allow instance setup
                 }
             }
         }
 
         stage('Setup Docker on EC2') {
-            steps {
-                withCredentials([file(credentialsId: 'EC2_SSH_KEY', variable: 'KEY_PATH')]) {
-                    script {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
-                            sudo apt-get update
-                            sudo apt-get install -y docker.io
-                            sudo systemctl start docker
-                            sudo systemctl enable docker
-                        EOF
-                        """
-                    }
-                }
+    steps {
+        withCredentials([file(credentialsId: 'EC2_SSH_KEY', variable: 'KEY_PATH')]) {
+            script {
+                sh """
+                ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+EOF
+                """
             }
         }
+    }
+}
+
 
         stage('Deploy 2048 Game') {
             steps {
