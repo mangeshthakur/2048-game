@@ -67,7 +67,7 @@ pipeline {
         stage('Wait for EC2 to be Ready') {
             steps {
                 script {
-                    sleep(120)  // Wait for 2 minutes to allow instance setup
+                    sleep(60)  // Wait for 1 minute to allow instance setup
                 }
             }
         }
