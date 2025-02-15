@@ -77,7 +77,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'EC2_SSH_KEY', variable: 'KEY_PATH')]) {
                     script {
                         sh """
-                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} << 'EOF'
+                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
                             sudo apt-get update
                             sudo apt-get install -y docker.io
                             sudo systemctl start docker
@@ -94,7 +94,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'EC2_PRIVATE_KEY', variable: 'KEY_PATH')]) {
                     script {
                         sh """
-                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} << 'EOF'
+                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
                             cat <<EOT > Dockerfile
                             FROM ubuntu:22.04
                             RUN apt-get update
