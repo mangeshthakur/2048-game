@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_instance" "jenkins_server" {
   ami           = "ami-04b4f1a9cf54c11d0" # Replace with the latest Ubuntu AMI
   instance_type = "t2.small"
-  key_name      = "default-ec2.pem"  # Replace with your Key-name
+  key_name      = "default-ec2"  # Replace with your Key-name
   tags = {
     Name = "Terraform-Jenkins-Server"
   }
