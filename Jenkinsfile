@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Pravesh-Sudha/2048-game.git'
+                git branch: 'main', url: 'https://github.com/Pravesh-Sudha/2048-game.git'
             }
         }
 
