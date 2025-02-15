@@ -82,7 +82,6 @@ sudo apt-get update
 sudo apt-get install -y docker.io
 sudo systemctl start docker
 sudo systemctl enable docker
-sudo usermod -aG docker $USER && newgrp docker
 EOF
                 """
             }
@@ -108,8 +107,8 @@ EXPOSE 80
 CMD [ "/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf" ]
 EOT
 
-docker build -t 2048-game .
-docker run -d -p 80:80 2048-game
+sudo docker build -t 2048-game .
+sudo docker run -d -p 80:80 2048-game
 EOF
                 """
             }
