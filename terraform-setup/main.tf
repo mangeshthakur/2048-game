@@ -15,9 +15,11 @@ resource "aws_s3_bucket" "terraform_state" {
   bucket = "terraform-state-logs-pravesh"
 }
 
-resource "aws_s3_bucket_acl" "terraform_state_acl" {
+resource "aws_s3_bucket_versioning" "versioning_example" {
   bucket = aws_s3_bucket.terraform_state.id
-  acl    = "private"
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 output "instance_public_ip" {
