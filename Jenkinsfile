@@ -91,30 +91,31 @@ EOF
 
 
         stage('Deploy 2048 Game') {
-            steps {
-                withCredentials([file(credentialsId: 'EC2_PRIVATE_KEY', variable: 'KEY_PATH')]) {
-                    script {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
-                            cat <<EOT > Dockerfile
-                            FROM ubuntu:22.04
-                            RUN apt-get update
-                            RUN apt-get install -y curl zip nginx
-                            RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-                            RUN curl -o /var/www/html/master.zip -L https://codeload.github.com/gabrielecirulli/2048/zip/master
-                            RUN cd /var/www/html && unzip master.zip && mv 2048-master/* . && rm -rf 2048-master master.zip
-                            EXPOSE 80
-                            CMD [ "/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf" ]
-                            EOT
-                            
-                            docker build -t 2048-game .
-                            docker run -d -p 80:80 2048-game
-                        EOF
-                        """
-                    }
-                }
+    steps {
+        withCredentials([file(credentialsId: 'EC2_SSH_KEY', variable: 'KEY_PATH')]) {
+            script {
+                sh """
+                ssh -o StrictHostKeyChecking=no -i ${KEY_PATH} ${INSTANCE_USER}@${env.INSTANCE_IP} <<EOF
+cat <<EOT > Dockerfile
+FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y curl zip nginx
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN curl -o /var/www/html/master.zip -L https://codeload.github.com/gabrielecirulli/2048/zip/master
+RUN cd /var/www/html && unzip master.zip && mv 2048-master/* . && rm -rf 2048-master master.zip
+EXPOSE 80
+CMD [ "/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf" ]
+EOT
+
+docker build -t 2048-game .
+docker run -d -p 80:80 2048-game
+EOF
+                """
             }
         }
+    }
+}
+
 
         stage('Verify Deployment') {
             steps {
