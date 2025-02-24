@@ -1,0 +1,36 @@
+# Install Docker
+sudo apt update -y
+sudo apt install -y docker.io unzip
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER && newgrp docker
+docker --version
+
+# Java
+sudo apt update -y
+sudo apt install -y fontconfig openjdk-17-jre
+java -version  # Verify Java installation
+
+# Add Jenkins repository and install Jenkins
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update -y
+sudo apt install -y jenkins
+sudo systemctl enable --now jenkins
+
+# Jenkins-Password
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+# Terraform
+sudo apt update -y && sudo apt install -y gnupg software-properties-common
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update -y
+sudo apt install -y terraform
+terraform --version
+
+# AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version 
+
